@@ -19,8 +19,8 @@ composer require engineor/flysystem-runabove
 See configuration section for credential details.
 
 ```php
-use Engineor\Flysystem\Runabove\Runabove;
-use Engineor\Flysystem\Runabove\RunaboveAdapter as Adapter;
+use Engineor\Flysystem\Runabove;
+use Engineor\Flysystem\RunaboveAdapter as Adapter;
 use League\Flysystem\Filesystem;
 
 $client = new Runabove([
@@ -38,9 +38,9 @@ $filesystem = new Filesystem(new Adapter($container));
 Alternatively:
 
 ```php
-use League\Flysystem\Runabove\Runabove;
+use Engineor\Flysystem\Runabove;
+use Engineor\Flysystem\RunaboveAdapter as Adapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Runabove\RunaboveAdapter as Adapter;
 
 $options = [
     'username'  => ':username',
