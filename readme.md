@@ -11,7 +11,7 @@
 ## Installation
 
 ```bash
-composer require league/flysystem-runabove
+composer require engineor/flysystem-runabove
 ```
 
 ## Usage
@@ -19,9 +19,9 @@ composer require league/flysystem-runabove
 See configuration section for credential details.
 
 ```php
-use League\Flysystem\Runabove\Runabove;
+use Engineor\Flysystem\Runabove\Runabove;
+use Engineor\Flysystem\Runabove\RunaboveAdapter as Adapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Runabove\RunaboveAdapter as Adapter;
 
 $client = new Runabove([
    'username'  => ':username',

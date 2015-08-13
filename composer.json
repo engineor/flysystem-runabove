@@ -1,5 +1,5 @@
 {
-    "name": "league/flysystem-runabove",
+    "name": "engineor/flysystem-runabove",
     "description": "Flysystem adapter for Runabove",
     "license": "MIT",
     "authors": [
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "League\\Flysystem\\Runabove\\": "src/"
+            "Engineor\\Flysystem\\": "src/"
         }
     },
     "config": {

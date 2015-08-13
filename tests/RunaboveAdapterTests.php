@@ -1,20 +1,20 @@
 <?php
 
-namespace League\Flysystem\RunaboveTest;
+namespace Engineor\Flysystem\RunaboveTest;
 
 use League\Flysystem\Config;
-use League\Flysystem\Runabove\RunaboveAdapter as Runabove;
+use Engineor\Flysystem\RunaboveAdapter as Runabove;
 
-class RunaboveTests extends PHPUnit_Framework_TestCase
+class RunaboveTests extends \PHPUnit_Framework_TestCase
 {
     public function getContainerMock()
     {
-        return Mockery::mock('OpenCloud\ObjectStore\Resource\Container');
+        return \Mockery::mock('OpenCloud\ObjectStore\Resource\Container');
     }
 
     public function getDataObjectMock($filename)
     {
-        $mock = Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
+        $mock = \Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
         $mock->shouldReceive('getName')->andReturn($filename);
         $mock->shouldReceive('getContentType')->andReturn('; plain/text');
         $mock->shouldReceive('getLastModified')->andReturn('2014-01-01');
@@ -38,7 +38,7 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
         $resource = tmpfile();
         $container = $this->getContainerMock();
         $dataObject = $this->getDataObjectMock('filename.ext');
-        $body = Mockery::mock('Guzzle\Http\EntityBody');
+        $body = \Mockery::mock('Guzzle\Http\EntityBody');
         $body->shouldReceive('close');
         $body->shouldReceive('getStream')->andReturn($resource);
         $body->shouldReceive('detachStream');
@@ -120,11 +120,11 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
     public function testUpdateFail()
     {
         $container = $this->getContainerMock();
-        $dataObject = Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
+        $dataObject = \Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
         $dataObject->shouldReceive('getLastModified')->andReturn(false);
         $dataObject->shouldReceive('setContent');
         $dataObject->shouldReceive('setEtag');
-        $dataObject->shouldReceive('update')->andReturn(Mockery::self());
+        $dataObject->shouldReceive('update')->andReturn(\Mockery::self());
         $container->shouldReceive('getObject')->andReturn($dataObject);
         $adapter = new Runabove($container);
         $this->assertFalse($adapter->update('filename.ext', 'content', new Config()));
@@ -136,7 +136,7 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
         $dataObject = $this->getDataObjectMock('filename.ext');
         $dataObject->shouldReceive('setContent');
         $dataObject->shouldReceive('setEtag');
-        $dataObject->shouldReceive('update')->andReturn(Mockery::self());
+        $dataObject->shouldReceive('update')->andReturn(\Mockery::self());
         $container->shouldReceive('getObject')->andReturn($dataObject);
         $adapter = new Runabove($container);
         $this->assertInternalType('array', $adapter->update('filename.ext', 'content', new Config()));
@@ -148,7 +148,7 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
         $dataObject = $this->getDataObjectMock('filename.ext');
         $dataObject->shouldReceive('setContent');
         $dataObject->shouldReceive('setEtag');
-        $dataObject->shouldReceive('update')->andReturn(Mockery::self());
+        $dataObject->shouldReceive('update')->andReturn(\Mockery::self());
         $container->shouldReceive('getObject')->andReturn($dataObject);
         $adapter = new Runabove($container);
         $resource = tmpfile();
@@ -197,8 +197,8 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
     public function testDelete($status, $expected)
     {
         $container = $this->getContainerMock();
-        $dataObject = Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
-        $dataObject->shouldReceive('delete')->andReturn(Mockery::self());
+        $dataObject = \Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
+        $dataObject->shouldReceive('delete')->andReturn(\Mockery::self());
         $dataObject->shouldReceive('getStatusCode')->andReturn($status);
         $container->shouldReceive('getObject')->andReturn($dataObject);
         $adapter = new Runabove($container);
@@ -228,8 +228,8 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
     {
         $container = $this->getContainerMock();
         $container->shouldReceive('getName')->andReturn('container_name');
-        $dataObject = Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
-        $dataObject->shouldReceive('copy')->andReturn(Mockery::self());
+        $dataObject = \Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
+        $dataObject->shouldReceive('copy')->andReturn(\Mockery::self());
         $dataObject->shouldReceive('getStatusCode')->andReturn($status);
         $container->shouldReceive('getObject')->andReturn($dataObject);
 
@@ -256,7 +256,7 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
     {
         $container = $this->getContainerMock();
         $container->shouldReceive('getName')->andReturn('container_name');
-        $dataObject = Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
+        $dataObject = \Mockery::mock('OpenCloud\ObjectStore\Resource\DataObject');
         $dataObject->shouldReceive('getName')->andReturn('filename.ext');
         $container->shouldReceive('objectList')->andReturn([$dataObject]);
         $container->shouldReceive('getService')->andReturn($container);
@@ -271,7 +271,7 @@ class RunaboveTests extends PHPUnit_Framework_TestCase
         $container = $this->getContainerMock();
         $container->shouldReceive('getName')->andReturn('container_name');
         $dataObject = $this->getDataObjectMock('filename.ext');
-        $container->shouldReceive('objectList')->andReturn(new ArrayIterator([$dataObject]), new ArrayIterator());
+        $container->shouldReceive('objectList')->andReturn(new \ArrayIterator([$dataObject]), new \ArrayIterator());
         $adapter = new Runabove($container);
         $this->assertInternalType('array', $adapter->listContents('', true));
     }
