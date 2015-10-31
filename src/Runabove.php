@@ -29,10 +29,18 @@ class Runabove extends OpenStack
      */
     public function __construct(array $secret, array $options = [])
     {
-        if (!isset($secret['region']) || $secret['region']) {
+        if (!isset($secret['region']) || !$secret['region']) {
             $secret['region'] = self::REGION_EUROPE;
         }
-        parent::__construct(self::IDENTITY_ENDPOINT, $secret, $options);
+
+        if (!isset($secret['identity_endpoint']) || !$secret['identity_endpoint']) {
+            $secret['identity_endpoint'] = self::IDENTITY_ENDPOINT;
+        }
+
+        $identityEndpoint = $secret['identity_endpoint'];
+        unset($secret['identity_endpoint']);
+
+        parent::__construct($identityEndpoint, $secret, $options);
     }
 
     /**
